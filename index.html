@@ -198,6 +198,51 @@
     color: var(--white-faint);
     letter-spacing: 0.05em;
   }
+
+  /* Trust strip (below hero) */
+  .trust-strip {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(14, 18, 25, 0.97);
+    padding: 1.35rem 3rem;
+  }
+  .trust-strip-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1rem 2.5rem;
+  }
+  .trust-strip-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white);
+    font-weight: 500;
+    flex: 0 0 auto;
+    padding-top: 0.15rem;
+  }
+  .trust-strip ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1.75rem;
+    font-size: 0.92rem;
+    color: var(--white-dim);
+    line-height: 1.5;
+  }
+  .trust-strip li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .trust-strip li::before {
+    content: '✔';
+    color: var(--gold);
+    font-size: 0.85em;
+  }
   .hero-note span { color: var(--white-dim); }
 
   /* TICKER */
@@ -648,6 +693,8 @@
     .solution { padding: 5rem 1.5rem; }
     .proof { padding: 4rem 1.5rem; }
     footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
+    .trust-strip { padding: 1.25rem 1.5rem; }
+    .trust-strip-inner { flex-direction: column; gap: 0.75rem; }
   }
 </style>
 </head>
@@ -672,22 +719,32 @@
     <img src="logo.png" alt="AgentAce" style="height:90px;width:auto;" />
   </div>
   <h1 class="hero-headline">
-    Your AI Team.<br />
-    <em>Always On.</em>
+    You're Losing Deals Every Day.<br />
+    <em>We Fix That in 5 Days.</em>
   </h1>
   <p class="hero-sub">
-    AgentAce deploys autonomous AI agent teams that qualify leads, 
-    write listing content, generate market reports, and nurture 
-    prospects — 24 hours a day, without adding staff.
+    Respond to every lead in under 60 seconds.<br />
+    Close more deals without hiring staff.
   </p>
   <div class="hero-actions">
     <a href="https://calendly.com/admin-agentace/30min" target="_blank" class="btn-primary">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      See a Live Demo
+      Book Your 15-Min Demo
     </a>
     <p class="hero-note">No slides. No pitch decks. <span>Just working software.</span></p>
   </div>
 </section>
+
+<div class="trust-strip" aria-label="Outcomes for real estate professionals">
+  <div class="trust-strip-inner">
+    <p class="trust-strip-label">Used by real estate professionals to:</p>
+    <ul>
+      <li>Respond in &lt;60 seconds</li>
+      <li>Save 20+ hours/week</li>
+      <li>Never miss a lead again</li>
+    </ul>
+  </div>
+</div>
 
 <!-- TICKER -->
 <div class="ticker">
