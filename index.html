@@ -1,231 +1,894 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Product Name - The Solution You Need</title>
-    
-    <!-- Import Google Font (Inter) for modern typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AgentAce — Your AI Team. Always On.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <style>
-        /* --- CSS Variables & Reset --- */
-        :root {
-            --primary-color: #2563eb; /* A nice modern blue */
-            --primary-hover: #1d4ed8;
-            --text-dark: #1f2937;
-            --text-light: #6b7280;
-            --bg-light: #f9fafb;
-            --bg-white: #ffffff;
-            --container-width: 1100px;
-        }
+  :root {
+    --black: #0a0d14;
+    --off-black: #0e1219;
+    --card: #121720;
+    --border: #1a2030;
+    --border-bright: #243048;
+    --gold: #c9a84c;
+    --gold-dim: #8a6f2e;
+    --gold-glow: rgba(201,168,76,0.10);
+    --navy: #1a2744;
+    --navy-bright: #223366;
+    --white: #eef0f5;
+    --white-dim: #7a8499;
+    --white-faint: #1e2535;
+    --red: #c94c4c;
+  }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  html { scroll-behavior: smooth; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--text-dark);
-            line-height: 1.6;
-            background-color: var(--bg-white);
-        }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: default;
+  }
 
-        /* --- Utility Classes --- */
-        .container {
-            width: 90%;
-            max-width: var(--container-width);
-            margin: 0 auto;
-        }
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
 
-        .btn {
-            display: inline-block;
-            padding: 12px 32px;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: 6px;
-            transition: background-color 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 3rem;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.4s, background 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(8,8,8,0.92);
+    border-color: var(--border);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  .nav-logo img {
+    height: 44px;
+    width: auto;
+  }
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.4rem;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .nav-cta:hover {
+    background: var(--gold-glow);
+    border-color: var(--gold);
+    color: var(--white);
+  }
 
-        .btn:hover {
-            background-color: var(--primary-hover);
-        }
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 3rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
 
-        /* --- Header / Hero Section --- */
-        .navbar {
-            padding: 20px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(26,39,68,0.3) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,39,68,0.3) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 100%, black 40%, transparent 100%);
+  }
 
-        .logo {
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: var(--text-dark);
-        }
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,39,68,0.4) 0%, rgba(201,168,76,0.04) 50%, transparent 70%);
+    top: -200px; right: -100px;
+    pointer-events: none;
+  }
 
-        .hero-section {
-            padding: 80px 0 120px;
-            text-align: center;
-            background: rgb(249,250,251);
-            background: linear-gradient(180deg, rgba(249,250,251,1) 0%, rgba(255,255,255,1) 100%);
-        }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s ease forwards;
+  }
 
-        .hero-title {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
+  .hero-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 12vw, 11rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s ease forwards;
+  }
+  .hero-headline em {
+    font-style: normal;
+    color: var(--gold);
+    display: block;
+  }
 
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto 40px auto;
-        }
+  .hero-sub {
+    max-width: 520px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--white-dim);
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s ease forwards;
+  }
 
-        /* --- Features Section --- */
-        .features-section {
-            padding: 80px 0;
-            background-color: var(--bg-white);
-        }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s ease forwards;
+  }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 40px rgba(201,168,76,0.3);
+  }
+  .btn-primary svg { width: 14px; height: 14px; }
 
-        .section-header h2 {
-            font-size: 2.25rem;
-            margin-bottom: 15px;
-        }
+  .hero-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--white-faint);
+    letter-spacing: 0.05em;
+  }
+  .hero-note span { color: var(--white-dim); }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
+  /* TICKER */
+  .ticker {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 0;
+    overflow: hidden;
+    background: var(--off-black);
+  }
+  .ticker-track {
+    display: flex;
+    gap: 0;
+    animation: ticker 25s linear infinite;
+    width: max-content;
+  }
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 2.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    white-space: nowrap;
+  }
+  .ticker-item::before {
+    content: '◆';
+    color: var(--gold);
+    font-size: 0.4rem;
+  }
 
-        .feature-card {
-            padding: 30px;
-            border-radius: 12px;
-            background: var(--bg-light);
-            text-align: left;
-            transition: transform 0.2s ease;
-        }
+  /* PAIN POINTS */
+  .pain {
+    padding: 7rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 80px;
+  }
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .pain-item {
+    background: var(--card);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .pain-item:hover { background: #181818; }
+  .pain-item::before {
+    content: attr(data-num);
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: var(--white-faint);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .pain-icon {
+    width: 36px; height: 36px;
+    margin-bottom: 1.5rem;
+    color: var(--red);
+  }
+  .pain-item h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: var(--white);
+  }
+  .pain-item p {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--white-dim);
+  }
 
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            display: block;
-        }
+  /* SOLUTION / HOW IT WORKS */
+  .solution {
+    padding: 7rem 3rem;
+    background: var(--off-black);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .solution-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .solution-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 0.95;
+    margin-bottom: 1rem;
+    color: var(--white);
+  }
+  .solution-headline em {
+    font-style: normal;
+    color: var(--gold);
+  }
+  .solution-sub {
+    font-size: 1rem;
+    color: var(--white-dim);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 4rem;
+  }
 
-        .feature-card h3 {
-            margin-bottom: 10px;
-            font-size: 1.25rem;
-        }
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+  .agent-card {
+    border: 1px solid var(--border);
+    padding: 2rem;
+    position: relative;
+    background: var(--black);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .agent-card:hover {
+    border-color: var(--gold-dim);
+    transform: translateY(-3px);
+  }
+  .agent-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .agent-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s ease infinite;
+  }
+  .agent-card h3 {
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: var(--white);
+  }
+  .agent-card p {
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: var(--white-dim);
+  }
 
-        .feature-card p {
-            color: var(--text-light);
-        }
+  /* PRICING */
+  .pricing {
+    padding: 7rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .pricing-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .pricing-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 0.95;
+    color: var(--white);
+  }
+  .pricing-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--white-dim);
+    letter-spacing: 0.05em;
+    text-align: right;
+  }
 
-        /* --- Footer --- */
-        .footer {
-            background-color: var(--text-dark);
-            color: #d1d5db;
-            padding: 40px 0;
-            text-align: center;
-            margin-top: 60px;
-        }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .pricing-card {
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    background: var(--card);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.3s;
+  }
+  .pricing-card.featured {
+    border-color: var(--gold-dim);
+    background: #111009;
+  }
+  .pricing-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: -1px; left: 2rem;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    padding: 0.25rem 0.75rem;
+    font-weight: 500;
+  }
+  .pricing-tier {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .pricing-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 0.25rem;
+  }
+  .pricing-price span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--white-dim);
+  }
+  .pricing-desc {
+    font-size: 0.85rem;
+    color: var(--white-dim);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  .pricing-features {
+    list-style: none;
+    flex: 1;
+    margin-bottom: 2.5rem;
+  }
+  .pricing-features li {
+    font-size: 0.85rem;
+    color: var(--white-dim);
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    line-height: 1.5;
+  }
+  .pricing-features li::before {
+    content: '→';
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    flex-shrink: 0;
+  }
+  .pricing-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid var(--border-bright);
+    color: var(--white-dim);
+    background: transparent;
+  }
+  .pricing-card.featured .pricing-cta {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--black);
+    font-weight: 500;
+  }
+  .pricing-cta:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: var(--gold-glow);
+  }
+  .pricing-card.featured .pricing-cta:hover {
+    background: #ddb958;
+    border-color: #ddb958;
+    color: var(--black);
+  }
 
-        /* --- Mobile Responsive --- */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.25rem;
-            }
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-        }
-    </style>
+  /* PROOF */
+  .proof {
+    padding: 5rem 3rem;
+    background: var(--off-black);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .proof-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white-dim);
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    padding: 8rem 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .cta-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.93;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  .cta-headline em {
+    font-style: normal;
+    color: var(--gold);
+  }
+  .cta-sub {
+    font-size: 1rem;
+    color: var(--white-dim);
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cta-disclaimer {
+    margin-top: 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--white-faint);
+    letter-spacing: 0.08em;
+  }
+  .cta-disclaimer span { color: var(--white-dim); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+  }
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .footer-logo:hover { opacity: 1; }
+  .footer-logo img { height: 32px; width: auto; }
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--white-faint);
+    letter-spacing: 0.08em;
+  }
+  .footer-email {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--white-dim);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+  .footer-email:hover { color: var(--gold); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .hero { padding: 0 1.5rem 4rem; }
+    .pain, .pricing, .cta-section { padding: 5rem 1.5rem; }
+    .solution { padding: 5rem 1.5rem; }
+    .proof { padding: 4rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
 </head>
 <body>
 
-    <!-- Navigation Structure -->
-    <header>
-        <div class="container navbar">
-            <div class="logo">ProductLogo.</div>
-            <!-- Optional Nav Links could go here -->
-        </div>
-    </header>
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <img src="logo.png" alt="AgentAce" />
+  </a>
+  <a href="https://calendly.com/admin-agentace/30min" target="_blank" class="nav-cta">
+    Book Demo →
+  </a>
+</nav>
 
-    <!-- Hero Section: The main hook -->
-    <section class="hero-section">
-        <div class="container">
-            <!-- Replaced generic title with benefit-driven copy -->
-            <h1 class="hero-title">Solve Your Customer's Biggest Problem. Fast.</h1>
-            <p class="hero-subtitle">
-                Don't just say it's innovative. Explain what it actually does for them. This is a subheadline to support the main claim above.
-            </p>
-            <button class="btn">Get Started Now</button>
-            <p style="margin-top: 15px; color: var(--text-light); font-size: 0.9rem;">No credit card required.</p>
-        </div>
-    </section>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <p class="hero-eyebrow">AI Agent Teams for Real Estate Professionals</p>
+  <div style="margin-bottom:2rem;opacity:0;animation:fadeUp 0.8s 0.3s ease forwards;">
+    <img src="logo.png" alt="AgentAce" style="height:90px;width:auto;" />
+  </div>
+  <h1 class="hero-headline">
+    Your AI Team.<br />
+    <em>Always On.</em>
+  </h1>
+  <p class="hero-sub">
+    AgentAce deploys autonomous AI agent teams that qualify leads, 
+    write listing content, generate market reports, and nurture 
+    prospects — 24 hours a day, without adding staff.
+  </p>
+  <div class="hero-actions">
+    <a href="https://calendly.com/admin-agentace/30min" target="_blank" class="btn-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      See a Live Demo
+    </a>
+    <p class="hero-note">No slides. No pitch decks. <span>Just working software.</span></p>
+  </div>
+</section>
 
-    <main>
-        <!-- Features Section: Proof of the claim -->
-        <section class="features-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Why choose our product?</h2>
-                    <p class="text-light">Here are three concrete reasons why we are revolutionary.</p>
-                </div>
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">Lead Qualifier Agent</div>
+    <div class="ticker-item">24/7 Response Time</div>
+    <div class="ticker-item">Listing Content Writer</div>
+    <div class="ticker-item">Market Report Generator</div>
+    <div class="ticker-item">Follow-Up Sequences</div>
+    <div class="ticker-item">No Setup Fees</div>
+    <div class="ticker-item">Month-to-Month</div>
+    <div class="ticker-item">Live in 5 Business Days</div>
+    <div class="ticker-item">Lead Qualifier Agent</div>
+    <div class="ticker-item">24/7 Response Time</div>
+    <div class="ticker-item">Listing Content Writer</div>
+    <div class="ticker-item">Market Report Generator</div>
+    <div class="ticker-item">Follow-Up Sequences</div>
+    <div class="ticker-item">No Setup Fees</div>
+    <div class="ticker-item">Month-to-Month</div>
+    <div class="ticker-item">Live in 5 Business Days</div>
+  </div>
+</div>
 
-                <div class="features-grid">
-                    <!-- Feature 1 -->
-                    <div class="feature-card">
-                        <span class="feature-icon">🚀</span>
-                        <h3>Lightning Fast</h3>
-                        <p>Stop waiting around. Our revolutionary processing engine gets results in milliseconds, not minutes.</p>
-                    </div>
-                    <!-- Feature 2 -->
-                    <div class="feature-card">
-                        <span class="feature-icon">🛡️</span>
-                        <h3>Bank-Grade Security</h3>
-                        <p>We take safety seriously. Your data is encrypted with state-of-the-art standards so you sleep soundly.</p>
-                    </div>
-                    <!-- Feature 3 -->
-                    <div class="feature-card">
-                        <span class="feature-icon">⚙️</span>
-                        <h3>Seamless Automation</h3>
-                        <p>Set it and forget it. Integrate with your existing workflow and automate the boring stuff.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+<!-- PAIN POINTS -->
+<section class="pain">
+  <p class="section-label reveal">The Problem</p>
+  <div class="pain-grid reveal">
+    <div class="pain-item" data-num="01">
+      <svg class="pain-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      <h3>Leads go cold in minutes</h3>
+      <p>Agents contacted within 5 minutes are 21× more likely to convert. Most manual responses take hours. You're losing deals before you even know about them.</p>
+    </div>
+    <div class="pain-item" data-num="02">
+      <svg class="pain-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      <h3>Content creation never ends</h3>
+      <p>Listing descriptions, social posts, market updates, emails — the content grind is relentless and repetitive. Hours every week, results you can't scale.</p>
+    </div>
+    <div class="pain-item" data-num="03">
+      <svg class="pain-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      <h3>Hiring staff kills margins</h3>
+      <p>A good assistant costs $3,000–$5,000/month before benefits. They work 8 hours, take sick days, and quit. Your pipeline suffers every time.</p>
+    </div>
+    <div class="pain-item" data-num="04">
+      <svg class="pain-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <h3>Follow-up falls through cracks</h3>
+      <p>70% of real estate leads are lost to poor follow-up, not bad lead quality. The manual CRM grind means warm prospects go cold while you're in showings.</p>
+    </div>
+  </div>
+</section>
 
-    <!-- Simple Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2023 Your Company Name. All rights reserved.</p>
-        </div>
-    </footer>
+<!-- SOLUTION -->
+<section class="solution">
+  <div class="solution-inner">
+    <p class="section-label reveal">How AgentAce Works</p>
+    <h2 class="solution-headline reveal">Four agents.<br /><em>One team.</em></h2>
+    <p class="solution-sub reveal">We deploy a dedicated AI team configured for your specific business. Each agent runs 24/7 and gets better the longer it works for you.</p>
+    <div class="agents-grid">
+      <div class="agent-card reveal">
+        <p class="agent-tag">Always Active</p>
+        <h3>Lead Qualifier</h3>
+        <p>Responds to every inbound inquiry in under 60 seconds. Asks qualifying questions, scores leads by readiness, and routes hot prospects to you instantly.</p>
+      </div>
+      <div class="agent-card reveal">
+        <p class="agent-tag">Always Active</p>
+        <h3>Content Writer</h3>
+        <p>Publishes weekly market updates, listing descriptions, and social posts in your voice. No editing required — or we adjust until it's perfect.</p>
+      </div>
+      <div class="agent-card reveal">
+        <p class="agent-tag">Always Active</p>
+        <h3>Market Report Generator</h3>
+        <p>Automatically pulls MLS and market data, formats neighborhood reports, and sends them to your sphere on a schedule. Stay top of mind effortlessly.</p>
+      </div>
+      <div class="agent-card reveal">
+        <p class="agent-tag">Always Active</p>
+        <h3>Follow-Up Agent</h3>
+        <p>Runs personalized drip sequences for cold and warm leads. Keeps your pipeline alive without daily manual work so you close more with less effort.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- PROOF STATS -->
+<section class="proof">
+  <div class="proof-inner">
+    <div class="stat reveal">
+      <p class="stat-num">&lt;60s</p>
+      <p class="stat-label">Lead Response Time</p>
+    </div>
+    <div class="stat reveal">
+      <p class="stat-num">21×</p>
+      <p class="stat-label">Higher Conversion vs Manual</p>
+    </div>
+    <div class="stat reveal">
+      <p class="stat-num">20h</p>
+      <p class="stat-label">Weekly Hours Saved Per Agent</p>
+    </div>
+    <div class="stat reveal">
+      <p class="stat-num">5</p>
+      <p class="stat-label">Days to Go Live</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <p class="section-label reveal">Simple Pricing</p>
+  <div class="pricing-header reveal">
+    <h2 class="pricing-headline">No setup fees.<br />No contracts.</h2>
+    <p class="pricing-note">Month-to-month.<br />Cancel anytime.</p>
+  </div>
+  <div class="pricing-grid">
+
+    <div class="pricing-card reveal">
+      <p class="pricing-tier">Starter</p>
+      <p class="pricing-price">$497<span>/month</span></p>
+      <p class="pricing-desc">Solo agents ready to stop losing leads to slow response times.</p>
+      <ul class="pricing-features">
+        <li>Lead Qualifier Agent (24/7)</li>
+        <li>Content Writer Agent</li>
+        <li>Monthly performance report</li>
+        <li>Setup & onboarding included</li>
+        <li>Email support</li>
+      </ul>
+      <a href="https://calendly.com/admin-agentace/30min" target="_blank" class="pricing-cta">Book a Demo →</a>
+    </div>
+
+    <div class="pricing-card featured reveal">
+      <p class="pricing-tier">Growth</p>
+      <p class="pricing-price">$997<span>/month</span></p>
+      <p class="pricing-desc">High-producing agents who want a full AI team handling the entire pipeline.</p>
+      <ul class="pricing-features">
+        <li>All 4 AI agents deployed</li>
+        <li>Lead Qualifier + Content Writer</li>
+        <li>Market Report Generator</li>
+        <li>Follow-Up Agent</li>
+        <li>Weekly performance reports</li>
+        <li>Priority support</li>
+      </ul>
+      <a href="https://calendly.com/admin-agentace/30min" target="_blank" class="pricing-cta">Book a Demo →</a>
+    </div>
+
+    <div class="pricing-card reveal">
+      <p class="pricing-tier">Team</p>
+      <p class="pricing-price">$2,500<span>/month</span></p>
+      <p class="pricing-desc">Teams and high-volume brokerages needing custom agents and analytics.</p>
+      <ul class="pricing-features">
+        <li>Custom agent configuration</li>
+        <li>Up to 3–5 team members</li>
+        <li>Analytics dashboard</li>
+        <li>CRM integration</li>
+        <li>Dedicated account support</li>
+        <li>Quarterly strategy review</li>
+      </ul>
+      <a href="https://calendly.com/admin-agentace/30min" target="_blank" class="pricing-cta">Book a Demo →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <h2 class="cta-headline reveal">
+    See it work<br /><em>in 15 minutes.</em>
+  </h2>
+  <p class="cta-sub reveal">
+    No slides. No pitch decks. We show you a live AI lead qualifier responding to a real inquiry and a market report generated in 45 seconds.
+  </p>
+  <a href="https://calendly.com/admin-agentace/30min" target="_blank" class="btn-primary reveal">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    Book Your Free Demo
+  </a>
+  <p class="cta-disclaimer reveal">No commitment required. <span>Live within 5 business days of signing.</span></p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">
+    <img src="logo.png" alt="AgentAce" />
+  </a>
+  <p class="footer-copy">© 2026 AgentAce. All rights reserved.</p>
+  <a href="mailto:admin@agentace.app" class="footer-email">admin@agentace.app</a>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
