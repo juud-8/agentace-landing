@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Product Name - The Solution You Need</title>
+    
+    <!-- Import Google Font (Inter) for modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS Variables & Reset --- */
+        :root {
+            --primary-color: #2563eb; /* A nice modern blue */
+            --primary-hover: #1d4ed8;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --bg-white: #ffffff;
+            --container-width: 1100px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--bg-white);
+        }
+
+        /* --- Utility Classes --- */
+        .container {
+            width: 90%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* --- Header / Hero Section --- */
+        .navbar {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .hero-section {
+            padding: 80px 0 120px;
+            text-align: center;
+            background: rgb(249,250,251);
+            background: linear-gradient(180deg, rgba(249,250,251,1) 0%, rgba(255,255,255,1) 100%);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+        }
+
+        /* --- Features Section --- */
+        .features-section {
+            padding: 80px 0;
+            background-color: var(--bg-white);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.25rem;
+            margin-bottom: 15px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            padding: 30px;
+            border-radius: 12px;
+            background: var(--bg-light);
+            text-align: left;
+            transition: transform 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.25rem;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: var(--text-dark);
+            color: #d1d5db;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        /* --- Mobile Responsive --- */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.25rem;
+            }
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Structure -->
+    <header>
+        <div class="container navbar">
+            <div class="logo">ProductLogo.</div>
+            <!-- Optional Nav Links could go here -->
+        </div>
+    </header>
+
+    <!-- Hero Section: The main hook -->
+    <section class="hero-section">
+        <div class="container">
+            <!-- Replaced generic title with benefit-driven copy -->
+            <h1 class="hero-title">Solve Your Customer's Biggest Problem. Fast.</h1>
+            <p class="hero-subtitle">
+                Don't just say it's innovative. Explain what it actually does for them. This is a subheadline to support the main claim above.
+            </p>
+            <button class="btn">Get Started Now</button>
+            <p style="margin-top: 15px; color: var(--text-light); font-size: 0.9rem;">No credit card required.</p>
+        </div>
+    </section>
+
+    <main>
+        <!-- Features Section: Proof of the claim -->
+        <section class="features-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Why choose our product?</h2>
+                    <p class="text-light">Here are three concrete reasons why we are revolutionary.</p>
+                </div>
+
+                <div class="features-grid">
+                    <!-- Feature 1 -->
+                    <div class="feature-card">
+                        <span class="feature-icon">🚀</span>
+                        <h3>Lightning Fast</h3>
+                        <p>Stop waiting around. Our revolutionary processing engine gets results in milliseconds, not minutes.</p>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="feature-card">
+                        <span class="feature-icon">🛡️</span>
+                        <h3>Bank-Grade Security</h3>
+                        <p>We take safety seriously. Your data is encrypted with state-of-the-art standards so you sleep soundly.</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="feature-card">
+                        <span class="feature-icon">⚙️</span>
+                        <h3>Seamless Automation</h3>
+                        <p>Set it and forget it. Integrate with your existing workflow and automate the boring stuff.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Simple Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Your Company Name. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
